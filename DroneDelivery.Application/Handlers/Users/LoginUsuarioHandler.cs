@@ -42,7 +42,12 @@ namespace DroneDelivery.Application.Handlers.Users
 
             // Verifica se o usuário existe
             if (user == null)
+            {
                 _response.AddNotification(new Notification("user", "Usuário ou senha inválidos"));
+                return _response;
+
+            }
+                
 
 
             var passwordResult = _passwordHasher.VerifyHashedPassword(user, user.Senha, request.Password);
