@@ -17,9 +17,9 @@ namespace DroneDelivery.Application.Handlers.Users
     {
 
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IPasswordHasher<User> _passwordHasher;
+        private readonly IPasswordHasher<Cliente> _passwordHasher;
 
-        public CriarUsuarioHandler(IUnitOfWork unitOfWork, IPasswordHasher<User> passwordHasher)
+        public CriarUsuarioHandler(IUnitOfWork unitOfWork, IPasswordHasher<Cliente> passwordHasher)
         {
             _unitOfWork = unitOfWork;
             _passwordHasher = passwordHasher;
@@ -43,16 +43,19 @@ namespace DroneDelivery.Application.Handlers.Users
                 return _response;
             }
 
-            user = new User
+            user = new Cliente
             {
                 Email = request.Email,
-                Username = request.Username,
+                Nome = request.Username,
                 Role = request.Role,
+                Latitude = request.Latitude,
+                Longitude = request.Longitude,
+
             };
 
             //hash password
             var passwordHash = _passwordHasher.HashPassword(user, request.Password);
-            user.Password = passwordHash;
+            user.Senha = passwordHash;
 
             await _unitOfWork.Users.AdicionarAsync(user);
             await _unitOfWork.SaveAsync();

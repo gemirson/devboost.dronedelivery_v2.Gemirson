@@ -8,10 +8,7 @@ namespace DroneDelivery.Application.Commands.Pedidos
     public class CriarPedidoCommand : Request<ResponseVal>
     {
         public double Peso { get; set; }
-
-        public double Latitude { get; set; }
-
-        public double Longitude { get; set; }
+        public Guid ClienteId { get; set; }    
 
         public void Validate()
         {
@@ -25,11 +22,9 @@ namespace DroneDelivery.Application.Commands.Pedidos
 
             AddNotifications(new Contract()
                 .Requires()
-                .AreNotEquals(Latitude, 0, nameof(Latitude), "A Latitude não pode ser vazia"));
+                .AreNotEquals(ClienteId, 0, nameof(ClienteId), "O ClienteId não pode ser vazio"));
 
-            AddNotifications(new Contract()
-                .Requires()
-                .AreNotEquals(Longitude, 0, nameof(Longitude), "A Longitude não pode ser vazia"));
+          
 
         }
     }

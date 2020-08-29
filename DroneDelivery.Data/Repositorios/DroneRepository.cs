@@ -48,10 +48,9 @@ namespace DroneDelivery.Data.Repositorios
 
         public async Task<IEnumerable<Drone>> ObterDronesParaEntregaAsync()
         {
-            var drones = await _context.Drones.Include(x => x.Pedidos)
+            var drones = await _context.Drones.Include(x => x.Pedidos).ThenInclude(x => x.Cliente)
                 .Where(x => x.Status == DroneStatus.Livre
                     && x.Pedidos.Count() > 0).ToListAsync();
-
             return drones;
         }
     }

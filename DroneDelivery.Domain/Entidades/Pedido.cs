@@ -10,21 +10,21 @@ namespace DroneDelivery.Domain.Entidades
 
         public DateTime DataPedido { get; private set; }
 
-        public double Latitude { get; private set; }
-        public double Longitude { get; private set; }
-        public PedidoStatus Status { get; private set; }
+       public PedidoStatus Status { get; private set; }
 
         public Guid? DroneId { get; private set; }
         public Drone Drone { get; private set; }
 
+        public Guid? ClienteId { get; private set; } 
+        public Cliente Cliente { get; private set; }
+
         protected Pedido() { }
 
-        public Pedido(double peso, double latitude, double longitude, PedidoStatus status)
+        public Pedido(double peso, Guid clienteId, PedidoStatus status)
         {
             Peso = peso;
-            Longitude = longitude;
-            Latitude = latitude;
             Status = status;
+            ClienteId = clienteId;
         }
 
         public void AtualizarStatusPedido(PedidoStatus status)

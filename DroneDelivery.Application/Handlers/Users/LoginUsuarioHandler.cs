@@ -18,9 +18,9 @@ namespace DroneDelivery.Application.Handlers.Users
 
         private readonly IUnitOfWork _unitOfWork;
         private readonly ITokenService _tokenService;
-        private readonly IPasswordHasher<User> _passwordHasher;
+        private readonly IPasswordHasher<Cliente> _passwordHasher;
 
-        public LoginUsuarioHandler(IUnitOfWork unitOfWork, ITokenService tokenService, IPasswordHasher<User> passwordHasher)
+        public LoginUsuarioHandler(IUnitOfWork unitOfWork, ITokenService tokenService, IPasswordHasher<Cliente> passwordHasher)
         {
             _unitOfWork = unitOfWork;
             _tokenService = tokenService;
@@ -45,7 +45,7 @@ namespace DroneDelivery.Application.Handlers.Users
                 _response.AddNotification(new Notification("user", "Usuário ou senha inválidos"));
 
 
-            var passwordResult = _passwordHasher.VerifyHashedPassword(user, user.Password, request.Password);
+            var passwordResult = _passwordHasher.VerifyHashedPassword(user, user.Senha, request.Password);
 
             if (passwordResult == PasswordVerificationResult.Failed)
                 _response.AddNotification(new Notification("user", "Usuário ou senha inválidos"));

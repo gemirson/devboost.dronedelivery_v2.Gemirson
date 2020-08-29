@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DroneDelivery.Application",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DroneDelivery.Utility", "DroneDelivery.Utility\DroneDelivery.Utility.csproj", "{E9FA3C19-8709-47F4-82F1-D6B5677BF5DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DroneDelivery.Infra", "DroneDelivery.Infra\DroneDelivery.Infra.csproj", "{9138835D-DBD2-4F7E-96DF-38DA264C68B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DroneDelivery.Infra", "DroneDelivery.Infra\DroneDelivery.Infra.csproj", "{9138835D-DBD2-4F7E-96DF-38DA264C68B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

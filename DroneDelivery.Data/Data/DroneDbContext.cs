@@ -10,7 +10,7 @@ namespace DroneDelivery.Data.Data
 
         }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
 
         public DbSet<Drone> Drones { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }

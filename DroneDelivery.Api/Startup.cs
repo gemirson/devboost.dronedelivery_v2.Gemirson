@@ -1,6 +1,7 @@
 
 using AutoMapper;
 using DroneDelivery.Api.Filter;
+using DroneDelivery.Application.Core;
 using DroneDelivery.Application.Handlers.Users;
 using DroneDelivery.Application.Interfaces;
 using DroneDelivery.Application.Services;
@@ -16,6 +17,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -101,8 +103,9 @@ namespace DroneDelivery.Api
             services.AddScoped<ITempoEntregaService, TempoEntregaService>();
 
             services.AddScoped<JwtSettings>();
+            services.AddScoped<AuthenticatedCliente>();
             services.AddScoped<ITokenService, TokenService>();
-            services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+            services.AddScoped<IPasswordHasher<Cliente>, PasswordHasher<Cliente>>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 

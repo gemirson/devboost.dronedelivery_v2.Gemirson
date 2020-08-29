@@ -7,13 +7,13 @@ namespace DroneDelivery.Domain.Interfaces
 {
     public interface IUserRepository
     {
-        Task<IEnumerable<User>> ObterAsync();
+        Task<IEnumerable<Cliente>> ObterAsync();
 
-        Task<User> ObterPorEmailAsync(string email);
+        Task<Cliente> ObterPorEmailAsync(string email);
 
-        Task<User> ObterAsync(Guid id);
+        Task<Cliente> ObterPorIdAsync(Guid id);
 
-        Task AdicionarAsync(User user);
+        Task AdicionarAsync(Cliente user);
 
     }
 }

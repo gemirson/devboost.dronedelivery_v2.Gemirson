@@ -21,14 +21,14 @@ namespace DroneDelivery.Application.Services
             _settings = settings;
         }
 
-        private static ClaimsIdentity GetClaimsIdentity(User user)
+        private static ClaimsIdentity GetClaimsIdentity(Cliente user)
         {
             var identity = new ClaimsIdentity
             (
                 new GenericIdentity(user.Email),
                 new[] {
                     new Claim(JwtRegisteredClaimNames.Jti, user.Id.ToString()),
-                    new Claim(JwtRegisteredClaimNames.Sub, user.Username)
+                    new Claim(JwtRegisteredClaimNames.Sub, user.Nome)
                 }
             );
 
@@ -45,7 +45,7 @@ namespace DroneDelivery.Application.Services
             return identity;
         }
 
-        public JsonWebToken CreateJWT(User user)
+        public JsonWebToken CreateJWT(Cliente user)
         {
             var identity = GetClaimsIdentity(user);
             var handler = new JwtSecurityTokenHandler();

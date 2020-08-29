@@ -25,6 +25,8 @@ namespace DroneDelivery.Application.AutoMapper
                 .ForMember(d => d.Status, opts => opts.MapFrom(x => x.Status.ToString()));
             CreateMap<Pedido, PedidoModel>();
 
+            CreateMap<Cliente, ClienteModel>();
+
             CreateMap<Pedido, DronePedidoModel>();
 
             CreateMap<Drone, DroneSituacaoModel>()

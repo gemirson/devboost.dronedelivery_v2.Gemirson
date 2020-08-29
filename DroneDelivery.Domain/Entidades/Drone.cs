@@ -66,9 +66,9 @@ namespace DroneDelivery.Domain.Entidades
 
             //obter tempo entrega dos pedidos que ja estao no drone
             double tempoEntregaAtual = 0;
-            foreach (var pedido in Pedidos.Where(x => x.Status == PedidoStatus.EmEntrega))
+            foreach (var pedido in Pedidos.Where(x => x.Status == PedidoStatus.EmEntrega).Select(x => x.Cliente))
             {
-                tempoEntregaAtual += tempoEntregaService.ObterTempoEntregaEmMinutosIda(ultimaLatitude, ultimaLongitude, pedido.Latitude, pedido.Longitude, Velocidade);
+                tempoEntregaAtual += tempoEntregaService.ObterTempoEntregaEmMinutosIda(ultimaLatitude, ultimaLongitude, pedido.Latitude,pedido.Longitude, Velocidade);
                 ultimaLatitude = pedido.Latitude;
                 ultimaLongitude = pedido.Longitude;
             }

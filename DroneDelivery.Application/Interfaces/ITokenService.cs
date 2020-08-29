@@ -5,6 +5,6 @@ namespace DroneDelivery.Application.Interfaces
 {
     public interface ITokenService
     {
-        JsonWebToken CreateJWT(User user);
+        JsonWebToken CreateJWT(Cliente user);
     }
 }

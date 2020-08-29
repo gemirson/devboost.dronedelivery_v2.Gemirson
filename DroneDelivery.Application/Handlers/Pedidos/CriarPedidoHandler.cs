@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using DroneDelivery.Application.Core;
 
 namespace DroneDelivery.Application.Handlers.Drones
 {
@@ -22,13 +23,15 @@ namespace DroneDelivery.Application.Handlers.Drones
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IOptions<BaseDroneConfig> _config;
+        private readonly AuthenticatedCliente _clienteHttpContext;
 
-        public CriarPedidoHandler(IUnitOfWork unitOfWork, IMapper mapper, IOptions<BaseDroneConfig> config, ITempoEntregaService calcularDistancia)
+        public CriarPedidoHandler(IUnitOfWork unitOfWork, IMapper mapper, IOptions<BaseDroneConfig> config, ITempoEntregaService calcularDistancia, AuthenticatedCliente clienteHttpContext)
         {
             _calcularDistancia = calcularDistancia;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _config = config;
+            _clienteHttpContext = clienteHttpContext;
         }
 
 
@@ -41,7 +44,15 @@ namespace DroneDelivery.Application.Handlers.Drones
                 return _response;
             }
 
-            var pedido = _mapper.Map<CriarPedidoCommand, Pedido>(request);
+          
+
+           var cliente = _unitOfWork.Users.ObterPorIdAsync(_clienteHttpContext.ID);
+
+            if (cliente == null) {
+                _response.AddNotification(new Notification("ID","Cliente não encontrado"));
+                return _response;
+            }
+            var pedido = new Pedido(request.Peso, _clienteHttpContext.ID,PedidoStatus.EmEntrega);
 
             if (!pedido.ValidarPesoPedido(Utility.Utils.CARGA_MAXIMA_GRAMAS))
                 _response.AddNotification(new Notification("pedido", $"capacidade do pedido não pode ser maior que {Utility.Utils.CARGA_MAXIMA_GRAMAS / 1000} KGs"));
@@ -63,7 +74,7 @@ namespace DroneDelivery.Application.Handlers.Drones
             {
 
                 //valida se algum drone tem autonomia e aceita capacidade para entregar o pedido
-                var droneTemAutonomia = drone.ValidarAutonomia(_calcularDistancia, _config.Value.Latitude, _config.Value.Longitude, pedido.Latitude, pedido.Longitude);
+                var droneTemAutonomia = drone.ValidarAutonomia(_calcularDistancia, _config.Value.Latitude, _config.Value.Longitude, cliente.Result.Latitude, cliente.Result.Longitude);
                 var droneAceitaPeso = drone.VerificarDroneAceitaOPesoPedido(pedido.Peso);
                 if (!droneTemAutonomia || !droneAceitaPeso)
                     continue;
@@ -77,7 +88,7 @@ namespace DroneDelivery.Application.Handlers.Drones
                     continue;
 
                 //verifica se o drone possui autonomia para enttregar o pedido
-                if (!drone.ValidarAutonomiaSobraPorPontoEntrega(_calcularDistancia, _config.Value.Latitude, _config.Value.Longitude, pedido.Latitude, pedido.Longitude))
+                if (!drone.ValidarAutonomiaSobraPorPontoEntrega(_calcularDistancia, _config.Value.Latitude, _config.Value.Longitude, cliente.Result.Latitude, cliente.Result.Longitude))
                     continue;
 
                 droneDisponivel = drone;
