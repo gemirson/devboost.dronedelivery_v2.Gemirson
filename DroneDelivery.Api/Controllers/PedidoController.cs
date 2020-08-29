@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace DroneDelivery.Api.Controllers
 {
-    [Authorize]
+   
     [ApiController]
     [Route("api/[controller]")]
     public class PedidoController : ControllerBase
@@ -23,7 +23,7 @@ namespace DroneDelivery.Api.Controllers
         {
             _mediator = mediator;
         }
-
+        [AllowAnonymous]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -53,6 +53,7 @@ namespace DroneDelivery.Api.Controllers
         ///
         /// </remarks>        
         /// <param name="command"></param>  
+        [Authorize]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
